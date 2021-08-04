@@ -1,7 +1,7 @@
 // Creating the map object
-var myMap = L.map("map", {
+let myMap = L.map("map", {
     center: [37.1281662, -121.5233307],
-    zoom: 12
+    zoom: 11
   });
   
   // Adding the tile layer
@@ -10,5 +10,27 @@ var myMap = L.map("map", {
   }).addTo(myMap);
   
   // Use this link to get the GeoJSON data.
-  var link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.geojson";
+  let link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.geojson";
   
+// Getting our GeoJSON data
+d3.json(link).then(function(type) {
+    L.geoJson(type, {
+        style: function(FeatureCollection) {
+          return {
+            color: "white",
+            fillColor: chooseColor(FeatureCollection.metadata.properties),
+            fillOpacity: 0.5,
+            weight: 1.5
+          };
+        }
+      }).addTo(myMap);
+    // Creating a GeoJSON layer with the retrieved data
+    // console.log(response.type.feature);
+    
+    
+
+
+
+
+
+});
