@@ -1,7 +1,7 @@
 // Creating the map object
 let myMap = L.map("map", {
     center: [37.1281662, -121.5233307],
-    zoom: 11
+    zoom: 10
   });
   
   // Adding the tile layer
@@ -24,13 +24,6 @@ d3.json(link).then(function(type) {
           };
         }
       }).addTo(myMap);
-    // Creating a GeoJSON layer with the retrieved data
-    // console.log(response.type.feature);
-    
-    
-
-
-
 
 
 });
