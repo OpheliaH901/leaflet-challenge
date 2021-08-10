@@ -70,6 +70,7 @@ function generateRadius(magnitude) {
   return 2 * magnitude
 }
 
+
 // Getting our GeoJSON data
 d3.json(earthquakes_link).then((earthquakes) => {
   L.geoJson(earthquakes, {
@@ -97,6 +98,19 @@ d3.json(earthquakes_link).then((earthquakes) => {
       );
     }
   }).addTo(myMap);
+
+// let tectonic_link = "https://raw.githubusercontent.com/fraxen/tectonicplates/b53c3b7d82afd764650ebdc4565b9666795b9d83/GeoJSON/PB2002_plates.json"
+
+// // Getting our GeoJSON data - tectonic plates
+// d3.json(tectonic_link).then((tectonicplates) => {
+//   L.geoJson(tectonicplates, {
+//     style: function (FeatureCollection) {
+//       return {
+//         color: '#000',
+//         fillColor: generateColor(FeatureCollection.geometry.coordinates[2]),
+
+//       };
+//     },
 
   // legend control object.
   var legend = L.control({
