@@ -1,13 +1,35 @@
 // Creating the map object
 let myMap = L.map("map", {
   center: [0, 0],
-  zoom: 2
+  zoom: 2,
 });
 
 // Adding the tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(myMap);
+
+// Define variables for our tile layers.
+let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+})
+
+let topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+});
+
+// Only one base layer can be shown at a time. stores options for us
+let baseMaps = {
+  Street: street,
+  Topography: topo
+};
+
+// Overlays that can be toggled on or off
+// var overlayMaps = {
+//   Cities: cityLayer
+// };
+
+
 
 // Use this earthquakes_link to get the GeoJSON data.
 let earthquakes_link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.geojson";
@@ -67,14 +89,15 @@ d3.json(earthquakes_link).then((earthquakes) => {
     }
   }).addTo(myMap);
 
-  // Here we create a legend control object.
+  // legend control object.
   var legend = L.control({
     position: "bottomleft"
   });
-
+    //create map legend
   legend.onAdd = function () {
     var div = L.DomUtil.create("div", "info legend-class");
 
+    // assign key values to data rec'd for legend
     var depths = [0, 20, 40, 60, 80, 100];
     var colors = [
       "#ff69b4",
@@ -96,6 +119,10 @@ d3.json(earthquakes_link).then((earthquakes) => {
   };
 
   // We add our legend to the map.
-  legend.addTo(myMap);
+  legend.addTo(myMap)
+
+  // Pass our map layers into our layer control.
+  // Add the layer control to the map.
+  L.control.layers(baseMaps).addTo(myMap);
 
 });
